@@ -1,0 +1,13 @@
+@layer modules {
+  ul.tags {
+    display: flex;
+    max-inline-size: 100%;
+    inline-size: 100%;
+    flex: 1;
+    gap: var(--gap-size);
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}

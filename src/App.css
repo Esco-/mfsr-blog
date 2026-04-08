@@ -5,7 +5,7 @@
   color: var(--accent);
   background: var(--accent-bg);
   border: 2px solid transparent;
-  transition: border-color: 0.3s;
+  transition: border-color 0.3s;
   margin-bottom: 24px;
 
   &:hover {
@@ -54,7 +54,7 @@
   }
 }
 
-#center {
+.center {
   display: flex;
   flex-direction: column;
   gap: 25px;
@@ -65,6 +65,21 @@
   @media (max-width: 1024px) {
     padding: 32px 20px 24px;
     gap: 18px;
+  }
+}
+
+.post-sorting-options {
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns:repeat(6, minmax(0, 1fr));
+
+  & .post-filter {
+    grid-column: span 2;
+  }
+
+  & .post-sorting-date,
+  & .post-sorting-order {
+    grid-column: span 2;
   }
 }
 

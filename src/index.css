@@ -1,3 +1,13 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+.stack > * + * {
+  margin-block-start: 1.5em;
+}
+
 :root {
   --text: #6b6375;
   --text-h: #08060d;
@@ -14,6 +24,7 @@
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
+  --gap-size: 8px;
 
   font: 18px/145% var(--sans);
   letter-spacing: 0.18px;
@@ -51,15 +62,14 @@
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
+  inline-size: 1126px;
+  max-inline-size: 100%;
   margin: 0 auto;
   text-align: center;
   border-inline: 1px solid var(--border);
   min-height: 100svh;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
 }
 
 body {
@@ -67,7 +77,8 @@ body {
 }
 
 h1,
-h2 {
+h2,
+h3 {
   font-family: var(--heading);
   font-weight: 500;
   color: var(--text-h);
@@ -89,6 +100,15 @@ h2 {
   margin: 0 0 8px;
   @media (max-width: 1024px) {
     font-size: 20px;
+  }
+}
+h3 {
+  font-size: 18px;
+  line-height: 138%;
+  letter-spacing: -0px;
+  margin: 0 0 6px;
+  @media (max-width: 1024px) {
+    font-size: 16px;
   }
 }
 p {

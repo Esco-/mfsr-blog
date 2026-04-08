@@ -1,0 +1,16 @@
+@layer modules {
+  .post-sorting {
+    display: flex;
+    flex-direction: column;
+  ¦ gap: calc(var(--gap-size) / 2);
+  }
+  .post-sorting select {
+    flex: 1;
+    border: 1px solid var(--muted-bg);
+    border-radius: calc(var(--radius-size) / 2);
+  }
+  .post-sorting select:focus {
+    outline: 0.5px solid var(--muted-bg);
+    box-shadow: var(--input-shadow);
+  }
+}

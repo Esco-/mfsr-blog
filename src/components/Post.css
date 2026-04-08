@@ -1,0 +1,18 @@
+@layer modules {
+  .post-summary {
+  }
+
+  .post-summary .title {
+    align-self: end;
+  }
+
+  .post-summary .body {
+    margin-block: 0.8em 1.5em;
+  }
+
+  .post-summary .author {
+    color: var(--text);
+    font-size: 14px;
+    margin-block: 0 1.5rem;
+  }
+}

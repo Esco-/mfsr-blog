@@ -1,0 +1,16 @@
+@layer modules {
+  textarea {
+    display: block;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    color: var(--text-h);
+
+    &:focus-visible {
+      outline: 2px solid var(--accent-border);
+      outline-offset: 2px;
+      box-shadow: var(--input-shadow);
+    }
+  }
+}

@@ -2,20 +2,81 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
+import { PostList } from './components/PostList'
+import { PostFilter } from './components/PostFilter'
+import { PostSorting } from './components/PostSorting'
+import { CreatePost } from './components/CreatePost'
 import './App.css'
+
+const posts = [
+  {
+    title: 'Full-Stack React Projects',
+    contents: "Let's become full-stack developers!",
+    author: 'Daniel Bugl',
+    tags: [
+      { title: 'javascript' },
+      { title: 'React' },
+      { title: 'MongoDB' },
+      { title: 'programming' },
+      { title: 'css' },
+      { title: 'Express' },
+      { title: 'deployment' },
+      { title: 'containerization' },
+      { title: 'docker' },
+      { title: 'lxc' },
+      { title: 'kubernetes' },
+      { title: 'Amazon ECS' },
+      { title: 'Google GKE' },
+    ],
+  },
+  { title: 'Hello React' },
+  {
+    title: 'Full-Stack React Projects',
+    contents: "Let's become full-stack developers!",
+    author: 'Daniel Bugl',
+    tags: [{ title: 'javascript' }, { title: 'React' }, { title: 'MongoDB' }],
+  },
+  { title: 'Hello React' },
+  {
+    title: 'Full-Stack React Projects',
+    contents: "Let's become full-stack developers!",
+    author: 'Daniel Bugl',
+    tags: [{ title: 'javascript' }, { title: 'React' }, { title: 'MongoDB' }],
+  },
+  {
+    title: 'Full-Stack React Projects',
+    contents: "Let's become full-stack developers!",
+    author: 'Daniel Bugl',
+    tags: [
+      { title: 'javascript' },
+      { title: 'React' },
+      { title: 'MongoDB' },
+      { title: 'programming' },
+      { title: 'css' },
+      { title: 'Express' },
+      { title: 'deployment' },
+      { title: 'containerization' },
+      { title: 'docker' },
+      { title: 'lxc' },
+      { title: 'kubernetes' },
+      { title: 'Amazon ECS' },
+      { title: 'Google GKE' },
+    ],
+  },
+]
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      <section id='center'>
+      <section className='center'>
         <div className='hero'>
           <img src={heroImg} className='base' width='170' height='179' alt='' />
           <img src={viteLogo} className='vite' alt='Vite logo' />
           <img src={reactLogo} className='framework react' alt='React logo' />
         </div>
-        <h1>Vite + React: Get started</h1>
+        <h1>Vite + React + Node.js: Get started</h1>
         <p>
           Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
         </p>
@@ -25,6 +86,22 @@ function App() {
         >
           count is {count}
         </button>
+      </section>
+
+      <div className='ticks'></div>
+
+      <section>
+        <CreatePost />
+      </section>
+
+      <div className='ticks'></div>
+
+      <section className='post-list'>
+        <section className='post-sorting-options'>
+          <PostFilter field='author' />
+          <PostSorting />
+        </section>
+        <PostList posts={posts} />
       </section>
 
       <div className='ticks'></div>

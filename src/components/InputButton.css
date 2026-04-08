@@ -1,0 +1,23 @@
+@layer modules {
+  input[type="submit"] {
+    grid-column: 6/7;
+    align-self: end;
+    background-color: var(--accent-bg);
+    padding: 8px 16px;
+    margin: 0 1rem 0 0;
+    cursor: pointer;
+    color: var(--text-h);
+    border: 1px solid transparent;
+    border-radius: 6px;
+    margin-bottom: 2rem;
+  }
+
+  input[type="submit"]:hover {
+    background-color: var(--accent-bg);
+  }
+
+  input[type="submit"]:disabled,
+  input[type="submit"]:disabled:hover{
+    background-color: red;
+  }
+}

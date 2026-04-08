@@ -1,0 +1,21 @@
+@layer modules {
+  .text-area {
+    margin: 1rem;
+    grid-column: 1/-1;
+
+    & label {
+      display: block;
+      text-align: start;
+      margin: 0 0 8px;
+      color: var(--text-h);
+      font-weight: 500;
+      font-size: 0.875rem;
+    }
+
+    & p {
+      font-size: 0.8rem;
+      color: var(--text);
+      text-align: start;
+    }
+  }
+}

@@ -1,0 +1,11 @@
+@layer modules {
+  input {
+    flex: 1;
+    border: 1px solid var(--muted-bg);
+    border-radius: calc(var(--radius) / 2)
+  }
+
+  input:focus {
+    box-shadow: var(--input-shadow);
+  }
+}
