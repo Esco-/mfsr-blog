@@ -6,7 +6,7 @@ export type Props = {
 export function Tag({ title }: Props) {
   return (
     <li className='tag'>
-      <a href='#' title={title}>
+      <a href='http://localhost:5173#' title={title}>
         {title}
       </a>
     </li>
