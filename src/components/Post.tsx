@@ -1,4 +1,3 @@
-import { type Props as TagProps } from './Tag'
 import { TagList } from './TagList'
 import './Post.css'
 
@@ -6,12 +5,12 @@ export type Props = {
   title: string
   contents?: string
   author?: string
-  tags?: TagProps[]
+  tags?: string[]
 }
 
 export function Post({ title, contents, author, tags = [] }: Props) {
   return (
-    <article className='post-summary'>
+    <li className='post-summary card'>
       <h3 className='title'>{title}</h3>
       {contents && <div className='body'>{contents}</div>}
       {author && (
@@ -22,6 +21,6 @@ export function Post({ title, contents, author, tags = [] }: Props) {
         </div>
       )}
       {!!tags?.length && <TagList tags={tags} />}
-    </article>
+    </li>
   )
 }

@@ -16,9 +16,7 @@ export function PostList({ posts = [] }: Props) {
         </div>
         <ul className='cards'>
           {posts.map((post, i) => (
-            <li className='card' key={i}>
-              <Post {...post} />
-            </li>
+            <Post {...post} key={i} />
           ))}
         </ul>
       </section>
