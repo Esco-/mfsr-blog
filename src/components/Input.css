@@ -1,11 +1,17 @@
 @layer modules {
   input {
-    flex: 1;
-    border: 1px solid var(--muted-bg);
-    border-radius: calc(var(--radius) / 2)
-  }
+    display: block;
+    border: 1px solid transparent;
+    outline: 1px solid var(--border);
+    background-color: var(--field-bg);
+    border-radius: 6px;
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    color: var(--text-h);
 
-  input:focus {
-    box-shadow: var(--input-shadow);
+    &:focus-visible {
+    outline: 2px solid var(--accent-border);
+    outline-offset: 2px;
+    }
   }
 }

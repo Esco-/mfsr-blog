@@ -1,6 +1,5 @@
 @layer modules {
   .text-area {
-    margin: 1rem;
     grid-column: 1/-1;
 
     & label {

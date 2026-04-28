@@ -10,7 +10,7 @@ export function PostList({ posts = [] }: Props) {
     !!posts.length && (
       <section className='post-list-summary'>
         <div className='head'>
-          <span className='heading'>Blog Posts</span>
+          <h1 className='heading'>Blog Posts</h1>
           <span className='count'>{posts.length}</span>
           <button className='clear-all'>Clear All</button>
         </div>

@@ -1,10 +1,15 @@
+import './Input.css'
+
 export type Props = {
   type: string
-  value?: string
+  value?: string | string[]
   id?: string
   className?: string
   name?: string
-  autocomplete?: string
+  autoComplete?: string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  disabled?: boolean
+  placeholder?: string
 }
 
 export function Input({
@@ -13,16 +18,22 @@ export function Input({
   id,
   className,
   name,
-  autocomplete = 'off',
+  onChange = (f) => f,
+  disabled,
+  placeholder,
+  autoComplete,
 }: Props) {
   return (
     <input
       type={type}
-      value={value}
       id={id}
       className={className}
       name={name}
-      autoComplete={autocomplete}
+      value={value}
+      onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
+      disabled={disabled}
+      placeholder={placeholder}
+      autoComplete={autoComplete}
     />
   )
 }

@@ -1,18 +1,27 @@
 @layer modules {
   .post-summary {
+    &.body {
+      font-size: 0.875rem;
+    }
+
+    & .author {
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    &.card {
+      padding: 1rem;
+      display: grid;
+      grid-row: span 5;
+      grid-template-rows: max-content auto max-content;
+      grid-template-rows: subgrid;
+      gap: 1rem;
+    }
+
   }
 
   .post-summary .title {
     align-self: end;
   }
 
-  .post-summary .body {
-    margin-block: 0.8em 1.5em;
-  }
-
-  .post-summary .author {
-    color: var(--text);
-    font-size: 14px;
-    margin-block: 0 1.5rem;
-  }
 }

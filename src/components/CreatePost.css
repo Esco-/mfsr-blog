@@ -1,9 +1,26 @@
 @layer modules {
   .create-post {
+    border-top: 1px solid var(--border);
+
+    & .success {
+      background-color: var(--success-bg);
+      color: var(--success-text);
+      text-align: start;
+      font-size: 0.875rem;
+      padding: 0.375rem 1rem;
+      margin: 1rem;
+      border-radius: 6px;
+    }
+
     & form {
       display: grid;
+      gap: 0.875rem;
       grid-template-columns: repeat(6, minmax(0, 1fr));
-      border-top: 1px solid var(--border);
+      margin: 0.875rem;
+
+      & > .text-input {
+        grid-column: span 3;
+      }
     }
   }
 /*

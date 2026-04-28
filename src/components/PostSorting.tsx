@@ -2,27 +2,43 @@ import { SelectFieldsWidget } from './SelectFieldsWidget'
 import './PostSorting.css'
 
 type Props = {
-  sortDate?: string[]
-  sortOrder?: string[]
+  sortByFields?: string[]
+  sortOrderFields?: string[]
+  sortByValue?: string
+  sortOrderValue?: string
+  onByChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void
+  onOrderChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void
 }
 
-const fieldsDate = ['createdAt', 'updatedAt']
+const fieldsBy = ['createdAt', 'updatedAt']
 const fieldsOrder = ['ascending', 'descending']
 
 export function PostSorting({
-  sortDate = fieldsDate,
-  sortOrder = fieldsOrder,
+  sortByFields = fieldsBy,
+  sortOrderFields = fieldsOrder,
+  sortByValue,
+  sortOrderValue,
+  onByChange,
+  onOrderChange,
 }: Props) {
   return (
     <>
       <div className='post-sorting-date'>
-        <SelectFieldsWidget name='sortBy' label='Sort by' fields={sortDate} />
+        <SelectFieldsWidget
+          name='sortBy'
+          label='Sort by'
+          fields={sortByFields}
+          value={sortByValue}
+          onSelectWidgetChange={onByChange}
+        />
       </div>
       <div className='post-sorting-order'>
         <SelectFieldsWidget
           name='sortOrder'
           label='Sort order'
-          fields={sortOrder}
+          fields={sortOrderFields}
+          value={sortOrderValue}
+          onSelectWidgetChange={onOrderChange}
         />
       </div>
     </>
