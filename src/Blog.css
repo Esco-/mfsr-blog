@@ -68,10 +68,16 @@
   }
 }
 
-.post-sorting-options {
+.post-list {
+  display: block;
   border-top: 1px solid var(--border);
+}
+
+.post-sorting-options {
   display: grid;
   grid-template-columns:repeat(6, minmax(0, 1fr));
+  gap: 0.875rem;
+  margin: 0.875rem;
 
   & .post-filter {
     grid-column: span 2;

@@ -12,8 +12,14 @@
   --text: #6b6375;
   --text-h: #08060d;
   --bg: #fff;
+  --field-bg: oklab(100% 0 5.96046e-8/.05);
   --border: #e5e4e7;
+  --field-border: oklch(87.2% .01 258.338);
   --code-bg: #f4f3ec;
+  --success-bg: #4CAF50;
+  --success-text: #ffffff;
+  --disabled-bg: #e7e9ec;
+  --disabled-border: #6a7282;
   --accent: #aa3bff;
   --accent-bg: rgba(170, 59, 255, 0.1);
   --accent-border: rgba(170, 59, 255, 0.5);
