@@ -1,5 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useState } from 'react'
+import {
+  useInputWidget as useInput,
+  useTextAreaWidget as useTextArea,
+} from '../hooks'
 import { createPost } from '../api/posts'
 import { TextAreaWidget } from './TextAreaWidget'
 import { TextInputWidget } from './TextInputWidget'
@@ -7,25 +10,30 @@ import { InputButton } from './InputButton.jsx'
 import './CreatePost.css'
 
 export function CreatePost() {
-  const [title, setTitle] = useState<string>('')
-  const [author, setAuthor] = useState<string>('')
-  const [contents, setContents] = useState<string>('')
-  const [tags, setTags] = useState<string | string[]>([])
+  const [titleProps, resetTitle] = useInput('')
+  const [authorProps, resetAuthor] = useInput('')
+  const [contentProps, resetContents] = useTextArea('')
+  const [tagProps, resetTags] = useInput('')
   const queryClient = useQueryClient()
   const createPostMutation = useMutation({
-    mutationFn: () => createPost({ title, author, contents, tags }),
+    mutationFn: () =>
+      createPost({
+        title: titleProps.value,
+        author: authorProps.value,
+        contents: contentProps.value,
+        tags: tagProps.value.split(',').map((tag) => tag.trim()),
+      }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['posts'] })
-      setTitle('')
-      setAuthor('')
-      setContents('')
-      setTags([])
+      resetTitle()
+      resetAuthor()
+      resetContents()
+      resetTags()
     },
   })
 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
-    tags.length && setTags(tags.split(',').map((tag) => tag.trim()))
     createPostMutation.mutate()
   }
   return (
@@ -34,39 +42,23 @@ export function CreatePost() {
         <TextInputWidget
           name='create-title'
           label='Post title'
-          value={title}
-          onTextInputWidgetChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setTitle(e.target.value)
-          }
+          {...titleProps}
         />
         <TextInputWidget
           name='create-author'
           label='Post author'
-          value={author}
-          onTextInputWidgetChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setAuthor(e.target.value)
-          }
+          {...authorProps}
         />
-        <TextAreaWidget
-          name='post'
-          label='Post text'
-          value={contents}
-          onTextAreaWidgetChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-            setContents(e.target.value)
-          }
-        />
+        <TextAreaWidget name='post' label='Post text' {...contentProps} />
         <TextInputWidget
           name='tag-post'
           label='Post tags'
-          value={tags}
-          onTextInputWidgetChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setTags(e.target.value)
-          }
+          {...tagProps}
           placeholder='A comma-separated list of tags (eg: react, JavaScript, node)'
         />
         <InputButton
           value={createPostMutation.isPending ? 'Creating...' : 'Create'}
-          disabled={!title || createPostMutation.isPending}
+          disabled={!titleProps.value || createPostMutation.isPending}
         />
       </form>
       {createPostMutation.isSuccess ? (
