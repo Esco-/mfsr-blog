@@ -2,24 +2,12 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
-import { useQuery } from '@tanstack/react-query'
 import { PostList } from './components/PostList'
 import { CreatePost } from './components/CreatePost'
-import { PostFilter } from './components/PostFilter'
-import { PostSorting } from './components/PostSorting'
-import { getPosts } from './api/posts'
 import './Blog.css'
 
 function Blog() {
   const [count, setCount] = useState(0)
-  const [author, setAuthor] = useState('')
-  const [sortBy, setSortBy] = useState<string>('createdAt')
-  const [sortOrder, setSortOrder] = useState<string>('descending')
-  const postsQuery = useQuery({
-    queryKey: ['posts', { author, sortBy, sortOrder }],
-    queryFn: () => getPosts({ author, sortBy, sortOrder }),
-  })
-  const posts = postsQuery.data ?? []
 
   return (
     <>
@@ -49,24 +37,7 @@ function Blog() {
 
       <div className='ticks'></div>
 
-      <section className='post-list'>
-        <section className='post-sorting-options'>
-          <PostFilter
-            field='author'
-            value={author}
-            onFilterChange={(e) => setAuthor(e.target.value)}
-          />
-          <PostSorting
-            sortByFields={['createdAt', 'updatedAt']}
-            sortOrderFields={['ascending', 'descending']}
-            sortByValue={sortBy}
-            onByChange={(e) => setSortBy(e.target.value)}
-            sortOrderValue={sortOrder}
-            onOrderChange={(e) => setSortOrder(e.target.value)}
-          />
-        </section>
-        <PostList posts={posts} />
-      </section>
+      <PostList />
 
       <div className='ticks'></div>
 

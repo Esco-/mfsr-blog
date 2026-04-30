@@ -1,12 +1,11 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   useInputWidget as useInput,
   useTextAreaWidget as useTextArea,
 } from '../hooks'
-import { createPost } from '../api/posts'
 import { TextAreaWidget } from './TextAreaWidget'
 import { TextInputWidget } from './TextInputWidget'
 import { InputButton } from './InputButton.jsx'
+import { usePosts } from '../hooks'
 import './CreatePost.css'
 
 export function CreatePost() {
@@ -14,30 +13,26 @@ export function CreatePost() {
   const [authorProps, resetAuthor] = useInput('')
   const [contentProps, resetContents] = useTextArea('')
   const [tagProps, resetTags] = useInput('')
-  const queryClient = useQueryClient()
-  const createPostMutation = useMutation({
-    mutationFn: () =>
-      createPost({
-        title: titleProps.value,
-        author: authorProps.value,
-        contents: contentProps.value,
-        tags: tagProps.value.split(',').map((tag) => tag.trim()),
-      }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['posts'] })
-      resetTitle()
-      resetAuthor()
-      resetContents()
-      resetTags()
-    },
-  })
+  const { createPost, isPending, isSuccess } = usePosts()
 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
-    createPostMutation.mutate()
+    createPost({
+      title: titleProps.value,
+      author: authorProps.value,
+      contents: contentProps.value,
+      tags: tagProps.value.split(',').map((tag) => tag.trim()),
+    })
+    resetTitle()
+    resetAuthor()
+    resetContents()
+    resetTags()
   }
   return (
     <section className='create-post'>
+      <div className='head'>
+        <h2>Create New Post</h2>
+      </div>
       <form onSubmit={handleSubmit} action=''>
         <TextInputWidget
           name='create-title'
@@ -57,11 +52,11 @@ export function CreatePost() {
           placeholder='A comma-separated list of tags (eg: react, JavaScript, node)'
         />
         <InputButton
-          value={createPostMutation.isPending ? 'Creating...' : 'Create'}
-          disabled={!titleProps.value || createPostMutation.isPending}
+          value={isPending ? 'Creating...' : 'Create'}
+          disabled={!titleProps.value || isPending}
         />
       </form>
-      {createPostMutation.isSuccess ? (
+      {isSuccess ? (
         <div className='success'>
           <strong>
             <em>Post created successfully!</em>

@@ -1,4 +1,5 @@
 import { SelectFieldsWidget } from './SelectFieldsWidget'
+import { usePosts } from '../hooks'
 import './PostSorting.css'
 
 type Props = {
@@ -16,11 +17,8 @@ const fieldsOrder = ['ascending', 'descending']
 export function PostSorting({
   sortByFields = fieldsBy,
   sortOrderFields = fieldsOrder,
-  sortByValue,
-  sortOrderValue,
-  onByChange,
-  onOrderChange,
 }: Props) {
+  const { sortBy, setSortBy, sortOrder, setSortOrder } = usePosts()
   return (
     <>
       <div className='post-sorting-date'>
@@ -28,8 +26,10 @@ export function PostSorting({
           name='sortBy'
           label='Sort by'
           fields={sortByFields}
-          value={sortByValue}
-          onSelectWidgetChange={onByChange}
+          value={sortBy}
+          onSelectWidgetChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+            setSortBy(e.target.value)
+          }
         />
       </div>
       <div className='post-sorting-order'>
@@ -37,8 +37,10 @@ export function PostSorting({
           name='sortOrder'
           label='Sort order'
           fields={sortOrderFields}
-          value={sortOrderValue}
-          onSelectWidgetChange={onOrderChange}
+          value={sortOrder}
+          onSelectWidgetChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+            setSortOrder(e.target.value)
+          }
         />
       </div>
     </>
