@@ -12,12 +12,13 @@ export const PostProvider = ({ children }: PostProviderProps) => {
   const [author, setAuthor] = useState('')
   const [sortBy, setSortBy] = useState('createdAt')
   const [sortOrder, setSortOrder] = useState('descending')
+  const [tag, setTag] = useState('')
 
   const queryClient = useQueryClient()
 
   const postsQuery = useQuery({
-    queryKey: ['posts', { author, sortBy, sortOrder }],
-    queryFn: () => getPosts({ author, sortBy, sortOrder }),
+    queryKey: ['posts', { author, sortBy, sortOrder, tag }],
+    queryFn: () => getPosts({ author, sortBy, sortOrder, tag }),
   })
 
   const createPostMutation = useMutation({
@@ -37,9 +38,11 @@ export const PostProvider = ({ children }: PostProviderProps) => {
         author,
         sortBy,
         sortOrder,
+        tag,
         setAuthor,
         setSortBy,
         setSortOrder,
+        setTag,
       }}
     >
       {children}

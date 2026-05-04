@@ -68,9 +68,11 @@ type PostContextType = {
   author: string
   sortBy: string
   sortOrder: string
+  tag: string
   setAuthor: Dispatch<SetStateAction<string>>
   setSortBy: Dispatch<SetStateAction<string>>
   setSortOrder: Dispatch<SetStateAction<string>>
+  setTag: Dispatch<SetStateAction<string>>
 }
 
 export const PostContext = createContext<PostContextType | undefined>(undefined)
