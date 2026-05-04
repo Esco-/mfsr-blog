@@ -1,6 +1,9 @@
 @layer modules {
   li.tag {
-    & a {
+    & button {
+      background: none;
+      border: none;
+      cursor: pointer;
       font-size: 14px;
       line-height: 100%;
       padding: 6px 12px;
@@ -10,7 +13,6 @@
       border-radius: 6px;
       border: 2px solid transparent;
       transition: border-color 0.3s;
-      text-decoration: none;
 
       &:hover {
         border-color: var(--accent-border);

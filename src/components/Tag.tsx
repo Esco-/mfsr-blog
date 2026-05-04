@@ -1,14 +1,17 @@
+import { usePosts } from '../hooks'
 import './Tag.css'
+
 export type Props = {
   title: string
 }
 
 export function Tag({ title }: Props) {
+  const { setTag } = usePosts()
   return (
     <li className='tag'>
-      <a href='http://localhost:5173#' title={title}>
+      <button title={title} onClick={() => setTag(title)}>
         {title}
-      </a>
+      </button>
     </li>
   )
 }
