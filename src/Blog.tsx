@@ -4,6 +4,7 @@ import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import { PostList } from './components/PostList'
 import { CreatePost } from './components/CreatePost'
+import { Icon } from './components/Icon'
 import './Blog.css'
 
 function Blog() {
@@ -43,9 +44,7 @@ function Blog() {
 
       <section id='next-steps'>
         <div id='docs'>
-          <svg className='icon' role='presentation' aria-hidden='true'>
-            <use href='/icons.svg#documentation-icon'></use>
-          </svg>
+          <Icon iconId='documentation-icon' />
           <h2>Documentation</h2>
           <p>Your questions, answered</p>
           <ul>
@@ -64,9 +63,7 @@ function Blog() {
           </ul>
         </div>
         <div id='social'>
-          <svg className='icon' role='presentation' aria-hidden='true'>
-            <use href='/icons.svg#social-icon'></use>
-          </svg>
+          <Icon iconId='social-icon' />
           <h2>Connect with us</h2>
           <p>Join the Vite community</p>
           <ul>
@@ -76,37 +73,19 @@ function Blog() {
                 target='_blank'
                 rel='noreferrer'
               >
-                <svg
-                  className='button-icon'
-                  role='presentation'
-                  aria-hidden='true'
-                >
-                  <use href='/icons.svg#github-icon'></use>
-                </svg>
+                <Icon iconId='github-icon' className='button-icon' />
                 GitHub
               </a>
             </li>
             <li>
               <a href='https://chat.vite.dev/' target='_blank' rel='noreferrer'>
-                <svg
-                  className='button-icon'
-                  role='presentation'
-                  aria-hidden='true'
-                >
-                  <use href='/icons.svg#discord-icon'></use>
-                </svg>
+                <Icon iconId='discord-icon' className='button-icon' />
                 Discord
               </a>
             </li>
             <li>
               <a href='https://x.com/vite_js' target='_blank' rel='noreferrer'>
-                <svg
-                  className='button-icon'
-                  role='presentation'
-                  aria-hidden='true'
-                >
-                  <use href='/icons.svg#x-icon'></use>
-                </svg>
+                <Icon iconId='x-icon' className='button-icon' />
                 X.com
               </a>
             </li>
@@ -116,13 +95,7 @@ function Blog() {
                 target='_blank'
                 rel='noreferrer'
               >
-                <svg
-                  className='button-icon'
-                  role='presentation'
-                  aria-hidden='true'
-                >
-                  <use href='/icons.svg#bluesky-icon'></use>
-                </svg>
+                <Icon iconId='bluesky-icon' className='button-icon' />
                 Bluesky
               </a>
             </li>

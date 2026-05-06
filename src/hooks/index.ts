@@ -60,19 +60,34 @@ export const useTextAreaWidget = (
 
 type PostContextType = {
   posts: PostProps[]
+  post: PostProps | null
   isLoading: boolean
   isSuccess: boolean
   isPending: boolean
+  isDelSuccess: boolean
+  isDelPending: boolean
   error: unknown
-  createPost: (post: PostProps) => Promise<void>
+  createPost: (post: PostProps) => Promise<PostProps>
+  patchPost: (id: number, post: PostProps) => Promise<PostProps>
+  deletePost: (_id: number) => Promise<void>
   author: string
+  authorFilter: string
+  title: string
+  contents: string
   sortBy: string
   sortOrder: string
-  tag: string
+  tags: string
+  tagsFilter: string
+  editId: number | null
   setAuthor: Dispatch<SetStateAction<string>>
+  setAuthorFilter: Dispatch<SetStateAction<string>>
+  setTitle: Dispatch<SetStateAction<string>>
+  setContents: Dispatch<SetStateAction<string>>
   setSortBy: Dispatch<SetStateAction<string>>
   setSortOrder: Dispatch<SetStateAction<string>>
-  setTag: Dispatch<SetStateAction<string>>
+  setTags: Dispatch<SetStateAction<string>>
+  setTagsFilter: Dispatch<SetStateAction<string>>
+  setEditId: Dispatch<SetStateAction<number>>
 }
 
 export const PostContext = createContext<PostContextType | undefined>(undefined)

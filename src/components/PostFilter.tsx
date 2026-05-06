@@ -10,16 +10,16 @@ type Props = {
 }
 
 export function PostFilter({ field, placeholder }: Props) {
-  const { author, setAuthor } = usePosts()
+  const { authorFilter, setAuthorFilter } = usePosts()
   return (
     <div className='post-filter'>
       <TextInputWidget
         name={`filter-${field}`}
         label={`Filter by ${field}:`}
-        value={author}
+        value={authorFilter}
         placeholder={placeholder}
         onTextInputWidgetChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          setAuthor(e.target.value)
+          setAuthorFilter(e.target.value)
         }
       />
     </div>

@@ -39,7 +39,7 @@ export const createPost = async (post: PostPayload): Promise<Post> => {
   return await parseJson(res)
 }
 
-export const updatePost = async (
+export const patchPost = async (
   id: number,
   post: Partial<PostPayload>,
 ): Promise<Post> => {
@@ -56,4 +56,15 @@ export const deletePost = async (id: number): Promise<void> => {
     method: 'DELETE',
   })
   if (!res.ok) throw new Error(`Delete failed: ${res.status}`)
+}
+
+export const getPost = async ({
+  editId,
+}: {
+  editId: number | null
+}): Promise<Post> => {
+  const res = await fetch(`${BASE_URL}/posts/${editId}`, {
+    method: 'GET',
+  })
+  return await parseJson(res)
 }

@@ -5,14 +5,21 @@ import { usePosts } from '../hooks'
 import './PostList.css'
 
 export function PostList() {
-  const { posts } = usePosts()
+  const { posts, setAuthorFilter, setTagsFilter, setSortBy, setSortOrder } =
+    usePosts()
+
+  const handleClick = () => {
+    setAuthorFilter('')
+    setTagsFilter('')
+    setSortBy('createdAt')
+    setSortOrder('descending')
+  }
 
   return (
     <section className='post-list'>
       <div className='head'>
         <h1 className='heading'>Blog Posts</h1>
         <span className='count'>{posts.length}</span>
-        <button className='clear-all'>Clear All</button>
       </div>
       <section className='post-sorting-options'>
         <PostFilter
@@ -23,6 +30,13 @@ export function PostList() {
           sortByFields={['createdAt', 'updatedAt']}
           sortOrderFields={['ascending', 'descending']}
         />
+        <button
+          className='clear-all'
+          title='Clear all filters'
+          onClick={handleClick}
+        >
+          Reset
+        </button>
       </section>
 
       {!!posts.length && (

@@ -6,10 +6,10 @@ export type Props = {
 }
 
 export function Tag({ title }: Props) {
-  const { setTag } = usePosts()
+  const { setTagsFilter } = usePosts()
   return (
     <li className='tag'>
-      <button title={title} onClick={() => setTag(title)}>
+      <button title={title} onClick={() => setTagsFilter(title)}>
         {title}
       </button>
     </li>

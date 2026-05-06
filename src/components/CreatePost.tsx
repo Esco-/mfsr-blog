@@ -1,7 +1,4 @@
-import {
-  useInputWidget as useInput,
-  useTextAreaWidget as useTextArea,
-} from '../hooks'
+import { useEffect } from 'react'
 import { TextAreaWidget } from './TextAreaWidget'
 import { TextInputWidget } from './TextInputWidget'
 import { InputButton } from './InputButton.jsx'
@@ -9,25 +6,48 @@ import { usePosts } from '../hooks'
 import './CreatePost.css'
 
 export function CreatePost() {
-  const [titleProps, resetTitle] = useInput('')
-  const [authorProps, resetAuthor] = useInput('')
-  const [contentProps, resetContents] = useTextArea('')
-  const [tagProps, resetTags] = useInput('')
-  const { createPost, isPending, isSuccess } = usePosts()
+  const {
+    post,
+    createPost,
+    editId,
+    isPending,
+    isSuccess,
+    author,
+    setAuthor,
+    contents,
+    setContents,
+    tags,
+    setTags,
+    title,
+    setTitle,
+  } = usePosts()
 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
     createPost({
-      title: titleProps.value,
-      author: authorProps.value,
-      contents: contentProps.value,
-      tags: tagProps.value.split(',').map((tag) => tag.trim()),
+      title: title,
+      author: author,
+      contents: contents,
+      tags: tags
+        .split(',')
+        .map((tag) => tag.trim())
+        .join(', '),
     })
-    resetTitle()
-    resetAuthor()
-    resetContents()
-    resetTags()
+    setTitle('')
+    setAuthor('')
+    setContents('')
+    setTags('')
   }
+
+  useEffect(() => {
+    if (editId) {
+      setTitle(post?.title ? post.title : '')
+      setAuthor(post?.author ? post.author : '')
+      setContents(post?.contents ? post.contents : '')
+      setTags(post?.tags ? post.tags.join(', ') : [])
+    }
+  })
+
   return (
     <section className='create-post'>
       <div className='head'>
@@ -37,23 +57,39 @@ export function CreatePost() {
         <TextInputWidget
           name='create-title'
           label='Post title'
-          {...titleProps}
+          value={title}
+          onTextInputWidgetChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setTitle(e.target.value)
+          }
         />
         <TextInputWidget
           name='create-author'
           label='Post author'
-          {...authorProps}
+          value={author}
+          onTextInputWidgetChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setAuthor(e.target.value)
+          }
         />
-        <TextAreaWidget name='post' label='Post text' {...contentProps} />
+        <TextAreaWidget
+          name='post'
+          label='Post text'
+          value={contents}
+          onTextAreaWidgetChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+            setContents(e.target.value)
+          }
+        />
         <TextInputWidget
           name='tag-post'
           label='Post tags'
-          {...tagProps}
+          value={tags}
+          onTextInputWidgetChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setTags(e.target.value)
+          }
           placeholder='A comma-separated list of tags (eg: react, JavaScript, node)'
         />
         <InputButton
           value={isPending ? 'Creating...' : 'Create'}
-          disabled={!titleProps.value || isPending}
+          disabled={!title || isPending}
         />
       </form>
       {isSuccess ? (
