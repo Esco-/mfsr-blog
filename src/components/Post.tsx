@@ -3,14 +3,19 @@ import { usePosts } from '../hooks'
 import { Icon } from './Icon'
 import './Post.css'
 
-export type Props = {
-  _id: number
+export type PostPayload = {
   title: string
-  contents?: string
   author?: string
+  contents?: string
   tags?: string[]
+}
+
+export type Post = PostPayload & {
+  _id: number
   updatedAt?: string
   createdAt?: string
+}
+export type PostProps = Post & {
   children?: React.ReactElement
 }
 
@@ -23,7 +28,7 @@ export function Post({
   tags,
   updatedAt,
   createdAt,
-}: Props) {
+}: PostProps) {
   const { deletePost, setEditId } = usePosts()
   return (
     <li className='post-summary card'>

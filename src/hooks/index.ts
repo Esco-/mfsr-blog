@@ -5,7 +5,7 @@ import {
   type Dispatch,
   type SetStateAction,
 } from 'react'
-import { type Props as PostProps } from '../components/Post'
+import { type Post, type PostPayload } from '../components/Post'
 
 export const useInput = (initialValue: string) => {
   const [value, setValue] = useState(initialValue)
@@ -59,17 +59,19 @@ export const useTextAreaWidget = (
 }
 
 type PostContextType = {
-  posts: PostProps[]
-  post: PostProps | null
+  posts: Post[]
+  post: Post | null
   isLoading: boolean
   isSuccess: boolean
+  isPatchSuccess: boolean
   isPending: boolean
+  isPatchPending: boolean
   isDelSuccess: boolean
   isDelPending: boolean
   error: unknown
-  createPost: (post: PostProps) => Promise<PostProps>
-  patchPost: (id: number, post: PostProps) => Promise<PostProps>
-  deletePost: (_id: number) => Promise<void>
+  createPost: (post: PostPayload) => Promise<Post>
+  patchPost: (post: Post) => Promise<Post>
+  deletePost: (id: number) => Promise<void>
   author: string
   authorFilter: string
   title: string
@@ -87,7 +89,7 @@ type PostContextType = {
   setSortOrder: Dispatch<SetStateAction<string>>
   setTags: Dispatch<SetStateAction<string>>
   setTagsFilter: Dispatch<SetStateAction<string>>
-  setEditId: Dispatch<SetStateAction<number>>
+  setEditId: Dispatch<SetStateAction<number | null>>
 }
 
 export const PostContext = createContext<PostContextType | undefined>(undefined)

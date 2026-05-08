@@ -1,15 +1,4 @@
-export type PostPayload = {
-  title: string
-  author?: string
-  contents?: string
-  tags?: string
-}
-
-export type Post = PostPayload & {
-  id: number
-  createdAt: string
-  updatedAt: string
-}
+import { type Post, type PostPayload } from '../components/Post'
 
 const parseJson = async <T>(res: Response): Promise<T> => {
   if (!res.ok) {
@@ -39,11 +28,8 @@ export const createPost = async (post: PostPayload): Promise<Post> => {
   return await parseJson(res)
 }
 
-export const patchPost = async (
-  id: number,
-  post: Partial<PostPayload>,
-): Promise<Post> => {
-  const res = await fetch(`${BASE_URL}/posts/${id}`, {
+export const patchPost = async (post: Partial<Post>): Promise<Post> => {
+  const res = await fetch(`${BASE_URL}/posts/${post._id}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(post),
@@ -62,7 +48,10 @@ export const getPost = async ({
   editId,
 }: {
   editId: number | null
-}): Promise<Post> => {
+}): Promise<Post | null> => {
+  if (!editId) {
+    return null
+  }
   const res = await fetch(`${BASE_URL}/posts/${editId}`, {
     method: 'GET',
   })

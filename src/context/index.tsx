@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { type Props as PostProps } from '../components/Post'
+import { type PostPayload } from '../components/Post'
 import { PostContext } from '../hooks'
 import {
   createPost,
@@ -39,18 +39,17 @@ export const PostProvider = ({ children }: PostProviderProps) => {
   })
 
   const createPostMutation = useMutation({
-    mutationFn: (post: PostProps) => createPost(post),
+    mutationFn: (post: PostPayload) => createPost(post),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['posts'] }),
   })
 
   const patchPostMutation = useMutation({
-    mutationFn: ({ id, post }: { id: number; post: PostProps }) =>
-      patchPost(id, post),
+    mutationFn: (post: PostPayload) => patchPost(post),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['posts'] }),
   })
 
   const deletePostMutation = useMutation({
-    mutationFn: (_id: number) => deletePost(_id),
+    mutationFn: (id: number) => deletePost(id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['posts'] }),
   })
 
@@ -62,14 +61,14 @@ export const PostProvider = ({ children }: PostProviderProps) => {
         isLoading: postsQuery.isLoading,
         error: postsQuery.error,
         createPost: createPostMutation.mutateAsync,
-        deletePost: deletePostMutation.mutateAsync,
-        isDelSuccess: deletePostMutation.isSuccess,
-        isDelPending: deletePostMutation.isPending,
+        isSuccess: createPostMutation.isSuccess,
+        isPending: createPostMutation.isPending,
         patchPost: patchPostMutation.mutateAsync,
         isPatchSuccess: patchPostMutation.isSuccess,
         isPatchPending: patchPostMutation.isPending,
-        isSuccess: createPostMutation.isSuccess,
-        isPending: createPostMutation.isPending,
+        deletePost: deletePostMutation.mutateAsync,
+        isDelSuccess: deletePostMutation.isSuccess,
+        isDelPending: deletePostMutation.isPending,
         author,
         authorFilter,
         sortBy,

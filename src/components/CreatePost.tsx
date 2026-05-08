@@ -9,9 +9,12 @@ export function CreatePost() {
   const {
     post,
     createPost,
+    patchPost,
     editId,
     isPending,
+    isPatchPending,
     isSuccess,
+    isPatchSuccess,
     author,
     setAuthor,
     contents,
@@ -20,23 +23,44 @@ export function CreatePost() {
     setTags,
     title,
     setTitle,
+    setEditId,
   } = usePosts()
 
+  const tagsToArr = (tags: string): string[] => {
+    let strArr: string[] = []
+
+    if (tags.trim().includes(',')) {
+      strArr = tags.split(',').map((tag) => tag.trim())
+    } else if (tags.trim()) {
+      strArr = [tags.trim()]
+    } else {
+      strArr = ['']
+    }
+    return strArr
+  }
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
-    createPost({
-      title: title,
-      author: author,
-      contents: contents,
-      tags: tags
-        .split(',')
-        .map((tag) => tag.trim())
-        .join(', '),
-    })
+    if (!editId) {
+      createPost({
+        title: title,
+        author: author,
+        contents: contents,
+        tags: tagsToArr(tags),
+      })
+    } else {
+      patchPost({
+        _id: editId,
+        title: title,
+        author: author,
+        contents: contents,
+        tags: tagsToArr(tags),
+      })
+    }
     setTitle('')
     setAuthor('')
     setContents('')
     setTags('')
+    setEditId(null)
   }
 
   useEffect(() => {
@@ -44,9 +68,9 @@ export function CreatePost() {
       setTitle(post?.title ? post.title : '')
       setAuthor(post?.author ? post.author : '')
       setContents(post?.contents ? post.contents : '')
-      setTags(post?.tags ? post.tags.join(', ') : [])
+      setTags(post?.tags ? post.tags.join(', ') : '')
     }
-  })
+  }, [editId, post])
 
   return (
     <section className='create-post'>
@@ -87,15 +111,29 @@ export function CreatePost() {
           }
           placeholder='A comma-separated list of tags (eg: react, JavaScript, node)'
         />
-        <InputButton
-          value={isPending ? 'Creating...' : 'Create'}
-          disabled={!title || isPending}
-        />
+        {editId ? (
+          <InputButton
+            value={isPatchPending ? 'Updating...' : 'Update'}
+            disabled={!title || isPatchPending}
+          />
+        ) : (
+          <InputButton
+            value={isPending ? 'Creating...' : 'Create'}
+            disabled={!title || isPending}
+          />
+        )}
       </form>
       {isSuccess ? (
         <div className='success'>
           <strong>
             <em>Post created successfully!</em>
+          </strong>
+        </div>
+      ) : null}
+      {isPatchSuccess ? (
+        <div className='success'>
+          <strong>
+            <em>Post updated successfully!</em>
           </strong>
         </div>
       ) : null}
