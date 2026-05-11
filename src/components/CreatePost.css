@@ -8,7 +8,8 @@
       padding: 10px 0 20px 0;
       margin: 0.875rem 0.875rem 2rem;
       gap: 1rem;
-      align-items:center;
+      align-items:end;
+      justify-content: center;
     }
 
     & .success {
@@ -25,55 +26,23 @@
       display: grid;
       gap: 0.875rem;
       grid-template-columns: repeat(6, minmax(0, 1fr));
+      grid-template-rows: repeat(5, auto) ;
       margin: 0.875rem;
 
       & > .text-input {
         grid-column: span 3;
+
+        @media (max-width: 1024px) {
+          grid-column: span 6;
+        }
+      }
+      & > .submit {
+        grid-column: span 3;
+
+        @media (max-width: 1024px) {
+          grid-column: span 6;
+        }
       }
     }
   }
-/*
-  .create-post form {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .create-post form div {
-    display: flex;
-    gap: calc(var(--gap-size) / 2);
-  }
-
-  .create-post form :is(input, textarea) {
-    flex: 1;
-    border: 1px solid var(--muted-bg);
-    border-radius: calc(var(--radius-size) / 2);
-  }
-
-  .create-post form :is(input, textarea):focus {
-    outline: 0.5px solid var(--muted-bg);
-    box-shadow: var(--input-shadow);
-  }
-
-  .create-post form :is(button, input[type="submit"]) {
-    background-color: var(--brand-color-alt);
-    outline: none;
-    box-shadow: none;
-    border: none;
-    padding: 5px 20px;
-    cursor: pointer;
-    color: var(--background-color);
-  }
-
-  .create-post form :is(button, input[type="submit"]):hover {
-    background-color: var(--brand-invert);
-  }
-
-  .create-post form :is(button, input[type="submit"]):disabled {
-    background-color: grey;
-  }
-
-  .create-post form :is(button[disabled], input[type="submit"][disabled]):hover {
-    background-color: grey;
-  }
-  */
 }
