@@ -5,7 +5,6 @@
       border: none;
       cursor: pointer;
       font-size: 14px;
-      line-height: 100%;
       padding: 6px 12px;
       display:block;
       color: var(--accent);
