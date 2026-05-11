@@ -5,7 +5,7 @@
 
     & div.head {
       display: flex;
-      padding 10px 0 20px 0;
+      padding: 10px 0 20px 0;
       margin: 0.875rem 0.875rem 2rem;
       gap: 1rem;
       align-items:center;
