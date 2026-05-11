@@ -80,7 +80,7 @@ export function CreatePost() {
       <form onSubmit={handleSubmit} action=''>
         <TextInputWidget
           name='create-title'
-          label='Post title'
+          label='Post title *'
           value={title}
           onTextInputWidgetChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setTitle(e.target.value)
@@ -123,6 +123,7 @@ export function CreatePost() {
           />
         )}
       </form>
+      <small>* marks a required field</small>
       {isSuccess ? (
         <div className='success'>
           <strong>
