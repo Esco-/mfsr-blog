@@ -7,8 +7,7 @@
     "start": "node src/index.js",
     "test": "NODE_OPTIONS='--experimental-vm-modules --trace-warnings' jest",
     "lint": "eslint src",
-    "dev": "nodemon src/index.js",
-    "prepare": "husky"
+    "dev": "nodemon src/index.js"
   },
   "dependencies": {
     "body-parser": "^2.2.2",
