@@ -55,4 +55,4 @@ jobs:
         with:
           service: blog-frontend
           image: ${{ secrets.DOCKERHUB_USERNAME }}/blog-frontend:latest
-          flags: [--port=80, --allow-unauthenticated]
+          flags: --port=80, --allow-unauthenticated
