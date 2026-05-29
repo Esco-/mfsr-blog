@@ -39,6 +39,7 @@ jobs:
           image: ${{ secrets.DOCKERHUB_USERNAME }}/blog-backend:latest
           env_vars:
             DATABASE_URL= ${{ secrets.DATABASE_URL }}
+          flags: --allow-unauthenticated
       - name: Build and push frontend image
         uses: docker/build-push-action@v7
         with:
@@ -54,4 +55,4 @@ jobs:
         with:
           service: blog-frontend
           image: ${{ secrets.DOCKERHUB_USERNAME }}/blog-frontend:latest
-          flags: --port=80
+          flags: [--port=80, --allow-unauthenticated]
