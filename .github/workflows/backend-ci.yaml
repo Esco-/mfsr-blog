@@ -9,6 +9,9 @@ on:
 jobs:
   lint-and-test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     strategy:
       matrix:
         node-version: [23.x, 24.x]
@@ -16,7 +19,15 @@ jobs:
       run:
         working-directory: ./backend
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - id: auth
+        uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: 'projects/126330913503/locations/global/workloadIdentityPools/github-actions-pool/providers/github'
+          service_account: 'github-actions@project-8f43b812-f16a-474f-8c4.iam.gserviceaccount.com'
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
