@@ -37,6 +37,8 @@ jobs:
         with:
           service: blog-backend
           image: ${{ secrets.DOCKERHUB_USERNAME }}/blog-backend:latest
+          env_vars:
+            DATABASE_URL: ${{ secrets.DATABASE_URL }}
       - name: Build and push frontend image
         uses: docker/build-push-action@v7
         with:
