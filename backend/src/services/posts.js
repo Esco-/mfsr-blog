@@ -15,7 +15,7 @@ export async function listAllPosts(options) {
   return await listPosts({}, options)
 }
 export async function listPostsByAuthor(author, options) {
-  const postsByAuthor = author.trim()
+  const postsByAuthor = author
     ? await listPosts({ author }, options)
     : await listPosts(
         { $or: [{ author: { $exists: false } }, { author: '' }] },
