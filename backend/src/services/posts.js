@@ -1,6 +1,8 @@
-import { Post } from '../db/models/post.js'
-export async function createPost({ title, author, contents, tags }) {
-  const post = new Post({ title, author, contents, tags })
+import { Post } from '../db/models/post'
+import { User } from '../db/models/user'
+
+export async function createPost(userId, { title, contents, tags }) {
+  const post = new Post({ title, author: userId, contents, tags })
   return await post.save()
 }
 
@@ -14,15 +16,13 @@ async function listPosts(
 export async function listAllPosts(options) {
   return await listPosts({}, options)
 }
-export async function listPostsByAuthor(author, options) {
-  const postsByAuthor = author
-    ? await listPosts({ author }, options)
-    : await listPosts(
-        { $or: [{ author: { $exists: false } }, { author: '' }] },
-        options,
-      )
-  return postsByAuthor
+
+export async function listPostsByAuthor(authorUsername, options) {
+  const user = await User.findOne({ username: authorUsername })
+  if (!user) return []
+  return await listPosts({ author: user._id }, options)
 }
+
 export async function listPostsByTag(tags, options) {
   return await listPosts({ tags }, options)
 }
@@ -31,14 +31,14 @@ export async function getPostById(postId) {
   return await Post.findById(postId)
 }
 
-export async function updatePost(postId, { title, author, contents, tags }) {
+export async function updatePost(userId, postId, { title, contents, tags }) {
   return await Post.findOneAndUpdate(
-    { _id: postId },
-    { $set: { title, author, contents, tags } },
+    { _id: postId, author: userId },
+    { $set: { title, contents, tags } },
     { returnDocument: 'after' },
   )
 }
 
-export async function deletePost(postId) {
-  return await Post.deleteOne({ _id: postId })
+export async function deletePost(userId, postId) {
+  return await Post.deleteOne({ _id: postId, author: userId })
 }
