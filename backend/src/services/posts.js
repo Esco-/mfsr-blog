@@ -1,5 +1,5 @@
-import { Post } from '../db/models/post'
-import { User } from '../db/models/user'
+import { Post } from '../db/models/post.js'
+import { User } from '../db/models/user.js'
 
 export async function createPost(userId, { title, contents, tags }) {
   const post = new Post({ title, author: userId, contents, tags })
