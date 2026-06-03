@@ -21,7 +21,10 @@ export const Login = () => {
       setToken(data.token)
       navigate('/')
     },
-    onError: () => alert('failed to login!'),
+    onError: (err) => {
+      alert('failed to login!')
+      console.error(err)
+    },
   })
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
