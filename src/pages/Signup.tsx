@@ -17,7 +17,7 @@ export const Signup = () => {
     onSuccess: () => navigate('/login'),
     onError: () => alert('failed to sign up!'),
   })
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
     signupMutation.mutate()
   }
