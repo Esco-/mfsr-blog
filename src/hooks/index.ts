@@ -92,6 +92,11 @@ type PostContextType = {
   setEditId: Dispatch<SetStateAction<number | null>>
 }
 
+type AuthContextType = {
+  token: string | null
+  setToken: Dispatch<SetStateAction<string | null>>
+}
+
 export const PostContext = createContext<PostContextType | undefined>(undefined)
 
 export const usePosts = () => {
@@ -100,4 +105,17 @@ export const usePosts = () => {
     throw new Error('usePosts must be used within a PostProvider')
   }
   return context
+}
+
+export const AuthContext = createContext<AuthContextType>({
+  token: null,
+  setToken: () => {},
+})
+
+export function useAuth(): [
+  string | null,
+  Dispatch<SetStateAction<string | null>>,
+] {
+  const { token, setToken } = useContext(AuthContext)
+  return [token, setToken]
 }

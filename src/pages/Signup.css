@@ -1,0 +1,22 @@
+@layer theme {
+  .gTwo {
+    --main-bg: linear-gradient(235deg, #FFFFFF 0%, #000F25 100%), 
+    linear-gradient(180deg, #6100FF 0%, #000000 100%), 
+    linear-gradient(235deg, #FFA3AC 0%, #FFA3AC 40%, #00043C calc(40% + 1px), #00043C 60%, #005D6C calc(60% + 1px), #005D6C 70%, #00C9B1 calc(70% + 1px), #00C9B1 100%), 
+    linear-gradient(125deg, #FFA3AC 0%, #FFA3AC 40%, #00043C calc(40% + 1px), #00043C 60%, #005D6C calc(60% + 1px), #005D6C 70%, #00C9B1 calc(70% + 1px), #00C9B1 100%);
+    --main-bg: linear-gradient(235deg, #FFFFFF 10%, #000F25 100%);
+    --main-bg: linear-gradient(180deg, #6100FF 10%, #000000 100%);
+    --main-bg: linear-gradient(235deg, #FFA3AC 0%, #FFA3AC 40%, #00043C calc(40% + 1px), #00043C 60%, #005D6C calc(60% + 1px), #005D6C 70%, #00C9B1 calc(70% + 1px), #00C9B1 100%); 
+    --main-bg: linear-gradient(125deg, #FFA3AC 0%, #FFA3AC 40%, #00043C calc(40% + 1px), #00043C 60%, #005D6C calc(60% + 1px), #005D6C 70%, #00C9B1 calc(70% + 1px), #00C9B1 100%);
+    --main-bg: linear-gradient(90deg, #6010d7 0%, #7e44c8 4%, #9258de 12%, #aa71ea 23%, #7739bb calc(23% + 2px), #aa71ea calc(23% + 4px), #7739bbff 24%, #783cb9 26%, #985ae1 27%, #985ae1 28%, #5b10c9 calc(28% + 1px), #4f0db7 29%, #35067f 30%, #511e9b 34%, #6522c7 calc(34% + 1px), #420f8d 35%, #7841ba 45%, #ad73ee 46%, #8c51cb 52%, #a86febff 58%, #8d47e7 64%, #b77cf0 65%, #c793f6 66%, #9543eb 67%, #a259ec 68%, #a25cf3 72%, #521aa6 73%, #521aa6 calc(73% + 1px), #c690f4 76%, #360d75 77%, #7f2fe8 89%, #b881f5 90%, #7636bb calc(90% + 2px), #7235b6 92%, #8445e0 99%,  #834ad9 100%);
+    background-blend-mode: soft-light, screen, darken, normal;
+    background-image: var(--main-bg);
+    height: 10px;
+  }
+  .gThree {
+    --main-bg: linear-gradient(125deg, #FFFFFF 0%, #000000 100%), linear-gradient(200deg, #FFD9E8 0%, #FFD9E8 50%, #DE95BA calc(50% + 1px), #DE95BA 60%, #7F4A88 calc(60% + 1px), #7F4A88 75%, #4A266A calc(75% + 1px), #4A266A 100%), linear-gradient(113deg, #FFD9E8 0%, #FFD9E8 40%, #DE95BA calc(40% + 1px), #DE95BA 50%, #7F4A88 calc(50% + 1px), #7F4A88 70%, #4A266A calc(70% + 1px), #4A266A 100%);
+  ¦ background-blend-mode: overlay, overlay, normal;
+    background: var(--main-bg);
+    height: 300px;
+  }
+}

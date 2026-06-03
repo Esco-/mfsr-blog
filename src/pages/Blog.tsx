@@ -1,40 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import { PostList } from './components/PostList'
-import { CreatePost } from './components/CreatePost'
-import { Icon } from './components/Icon'
+import { jwtDecode } from 'jwt-decode'
+import { useAuth } from '../hooks'
+import reactLogo from '../assets/react.svg'
+import viteLogo from '../assets/vite.svg'
+import { PostList } from '../components/PostList'
+import { CreatePost } from '../components/CreatePost'
+import { Icon } from '../components/Icon'
+import { Header } from '../components/Header'
 import './Blog.css'
 
-function Blog() {
-  const [count, setCount] = useState(0)
+type DecodedToken = {
+  sub?: string
+}
 
+function Blog() {
+  const [token] = useAuth()
+  let sub: string | null = null
+  if (token) {
+    const decoded = jwtDecode<DecodedToken>(token)
+    sub = decoded.sub ?? null
+  }
   return (
     <>
-      <section className='center'>
-        <div className='hero'>
-          <img src={heroImg} className='base' width='170' height='179' alt='' />
-          <img src={viteLogo} className='vite' alt='Vite logo' />
-          <img src={reactLogo} className='framework react' alt='React logo' />
-        </div>
-        <h1>Vite + React + Node.js: Get started</h1>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-        </p>
-        <button
-          className='counter'
-          onClick={() => setCount((count) => count + 1)}
-        >
-          count is {count}
-        </button>
-      </section>
+      <Header />
 
-      <div className='ticks'></div>
-
-      <section>
-        <CreatePost />
-      </section>
+      {sub ? (
+        <>
+          <div className='ticks'></div>
+          <section>
+            <CreatePost />
+          </section>
+        </>
+      ) : null}
 
       <div className='ticks'></div>
 

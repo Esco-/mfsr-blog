@@ -5,7 +5,7 @@ import { User } from '../db/models/user'
 import {
   createUser,
   deleteUser,
-  getUserById,
+  getUserInfoById,
   listAllUsers,
   updateUser,
 } from '../services/users'
@@ -111,14 +111,14 @@ describe('listing users', () => {
   })
 })
 
-describe('getting a user', () => {
-  test('should return the full user', async () => {
-    const user = await getUserById(createdSampleUsers[0]._id)
-    expect(user.toObject()).toEqual(createdSampleUsers[0].toObject())
+describe("getting a user's info", () => {
+  test("should return the user's username", async () => {
+    const user = await getUserInfoById(createdSampleUsers[0]._id)
+    expect(user).toEqual({ username: createdSampleUsers[0].username })
   })
 
   test('should fail if id does not exist', async () => {
-    const user = await getUserById('000000000000000000000000')
+    const user = await getUserInfoById('000000000000000000000000')
     expect(user).toEqual(null)
   })
 })

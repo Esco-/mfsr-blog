@@ -2,6 +2,7 @@ import { Input } from './Input'
 import './TextInputWidget.css'
 
 type Props = {
+  type?: string
   name?: string
   label?: string
   value?: string | string[]
@@ -11,6 +12,7 @@ type Props = {
 }
 
 export function TextInputWidget({
+  type = 'text',
   name = 'text-input-widget',
   label = 'Label',
   value,
@@ -23,7 +25,7 @@ export function TextInputWidget({
       <label htmlFor={name}>{label}</label>
       <Input
         id={name}
-        type='text'
+        type={type}
         name={name}
         value={value}
         onChange={onTextInputWidgetChange}

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { TextAreaWidget } from './TextAreaWidget'
 import { TextInputWidget } from './TextInputWidget'
-import { InputButton } from './InputButton.jsx'
+import { InputButton } from './InputButton'
 import { usePosts } from '../hooks'
 import './CreatePost.css'
 

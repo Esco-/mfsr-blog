@@ -35,8 +35,15 @@ export async function listAllUsers(options) {
   return await listUsers({}, options)
 }
 
-export async function getUserById(userId) {
-  return await User.findById(userId)
+export async function getUserInfoById(userId) {
+  try {
+    const user = await User.findById(userId)
+    if (!user) return null
+    return { username: user.username }
+  } catch (err) {
+    throw new Error('user not found:' + err.message)
+  }
+  //return await User.findById(userId)
 }
 
 export async function updateUser(userId, { username, password }) {

@@ -1,0 +1,69 @@
+@layer modules {
+    .center {
+      border-block-start: 1px solid var(--border);
+    }
+  .counter {
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: var(--accent);
+    background: var(--accent-bg);
+    border: 2px solid transparent;
+    transition: border-color 0.3s;
+    margin-bottom: 24px;
+
+    &:hover {
+      border-color: var(--accent-border);
+    }
+    &:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+  }
+
+  .hero {
+    position: relative;
+
+    .base,
+    .framework,
+    .vite {
+      inset-inline: 0;
+      margin: 0 auto;
+    }
+
+    .base {
+      width: 170px;
+      position: relative;
+      z-index: 0;
+    }
+
+    .framework,
+    .vite {
+      position: absolute;
+    }
+
+    .framework {
+      z-index: 1;
+      top: 34px;
+      height: 28px;
+      transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg) scale(1.4);
+    }
+
+    .vite {
+      z-index: 0;
+      top: 107px;
+      height: 26px;
+      width: auto;
+      transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg) scale(0.8);
+    }
+  }
+
+}
+
+@layer theme {
+  .bands {
+    display: block;
+    height: 0.375rem;
+    background-image: linear-gradient(90deg, #6010d7 0%, #7e44c8 4%, #9258de 12%, #aa71ea 23%, #7739bb calc(23% + 2px), #aa71ea calc(23% + 4px), #7739bbff 24%, #783cb9 26%, #985ae1 27%, #985ae1 28%, #5b10c9 calc(28% + 1px), #4f0db7 29%, #35067f 30%, #511e9b 34%, #6522c7 calc(34% + 1px), #420f8d 35%, #7841ba 45%, #ad73ee 46%, #8c51cb 52%, #a86febff 58%, #8d47e7 64%, #b77cf0 65%, #c793f6 66%, #9543eb 67%, #a259ec 68%, #a25cf3 72%, #521aa6 73%, #521aa6 calc(73% + 1px), #c690f4 76%, #360d75 77%, #7f2fe8 89%, #b881f5 90%, #7636bb calc(90% + 2px), #7235b6 92%, #8445e0 99%,  #834ad9 100%);
+  }
+}
