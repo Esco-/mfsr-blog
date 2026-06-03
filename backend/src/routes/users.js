@@ -17,10 +17,11 @@ export function userRoutes(app) {
   app.post('/api/v1/user/login', async (req, res) => {
     try {
       const token = await loginUser(req.body)
+      console.log(token)
       return res.status(200).send({ token })
     } catch (err) {
       return res.status(400).send({
-        error: `login failed, did you enter the correct username/password? ${err.message}`,
+        error: `login failed, did you enter the correct username/password? ${err}`,
       })
     }
   })
