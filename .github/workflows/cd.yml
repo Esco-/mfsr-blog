@@ -41,7 +41,7 @@ jobs:
             DATABASE_PORT= ${{ secrets.DATABASE_PORT }}
             DATABASE_URL= ${{ secrets.DATABASE_URL }}
             JWT_SECRET= ${{ secrets.JWT_SECRET }}
-          flags: --port=${{ DATABASE_PORT }} --allow-unauthenticated
+          flags: --port=${{ secrets.DATABASE_PORT }} --allow-unauthenticated
       - name: Build and push frontend image
         uses: docker/build-push-action@v7
         with:
