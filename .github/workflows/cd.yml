@@ -39,8 +39,8 @@ jobs:
           image: ${{ secrets.DOCKERHUB_USERNAME }}/blog-backend:latest
           env_vars: |-
             DATABASE_PORT=${{ secrets.DATABASE_PORT }}
-            DATABASE_URL=${{ secrets.DATABASE_URL }}
-            JWT_SECRET=${{ secrets.JWT_SECRET }}
+            DATABASE_URL="${{ secrets.DATABASE_URL }}"
+            JWT_SECRET="${{ secrets.JWT_SECRET }}"
           flags: --port=${{ secrets.DATABASE_PORT }} --allow-unauthenticated
       - name: Build and push frontend image
         uses: docker/build-push-action@v7
