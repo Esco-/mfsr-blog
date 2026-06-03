@@ -9,7 +9,7 @@ export function userRoutes(app) {
       })
     } catch (err) {
       return res.status(400).json({
-        error: 'failed to create the user, does username already exist?',
+        error: `failed to create the user, does username already exist?: ${err.message}`,
       })
     }
   })
@@ -20,7 +20,7 @@ export function userRoutes(app) {
       return res.status(200).send({ token })
     } catch (err) {
       return res.status(400).send({
-        error: 'login failed, did you enter the correct username/password?',
+        error: `login failed, did you enter the correct username/password? ${err.message}`,
       })
     }
   })
