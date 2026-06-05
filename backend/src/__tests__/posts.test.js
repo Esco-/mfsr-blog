@@ -80,6 +80,14 @@ describe('creating posts', () => {
     const createdPost = await createPost(testUser._id, post)
     expect(createdPost._id).toBeInstanceOf(mongoose.Types.ObjectId)
   })
+
+  test('should notcreate post when author id does not exist', async () => {
+    const fakeUserId = '000000000000000000000000'
+    const post = { title: 'Orphan post' }
+    await expect(createPost(fakeUserId, post)).rejects.toThrow(
+      'author not found',
+    )
+  })
 })
 
 let createdSamplePosts = []
@@ -133,17 +141,24 @@ describe('listing posts', () => {
   })
 
   test('should not be able to filter posts by empty author field', async () => {
-    try {
-      await listPostsByAuthor()
-    } catch (err) {
-      expect(err).toBeInstanceOf(mongoose.Error.CastError)
-      expect(err.message).toContain('Cast to ObjectId failed')
-    }
+    const posts = await listPostsByAuthor()
+    expect(posts).toEqual([])
   })
 
   test('should be able to filter posts by tag', async () => {
     const posts = await listPostsByTag('nodejs')
     expect(posts.length).toBe(1)
+  })
+
+  test('tag not found should return empty array', async () => {
+    const posts = await listPostsByTag('no-such-tag')
+    expect(posts).toEqual([])
+  })
+
+  test('empty DB should return empty listAllPosts', async () => {
+    await Post.deleteMany({})
+    const posts = await listAllPosts()
+    expect(posts).toEqual([])
   })
 })
 
@@ -156,6 +171,12 @@ describe('getting a post', () => {
   test('should fail if the id does not exist', async () => {
     const post = await getPostById('000000000000000000000000')
     expect(post).toEqual(null)
+  })
+
+  test('should fail for invalid id format', async () => {
+    await expect(getPostById('invalid-id')).rejects.toThrow(
+      /Cast to ObjectId|Cast to ObjectId failed/,
+    )
   })
 })
 
@@ -203,6 +224,20 @@ describe('updating posts', () => {
     )
     expect(post).toEqual(null)
   })
+
+  test('should fail for invalid post id format', async () => {
+    await expect(
+      updatePost(testUser._id, 'invalid-id', { contents: 'x' }),
+    ).rejects.toThrow(/Cast to ObjectId|Cast to ObjectId failed/)
+  })
+
+  test('should not allow another user to update the post', async () => {
+    const otherUser = await createUser({ username: 'other', password: 'pw' })
+    const post = await updatePost(otherUser._id, createdSamplePosts[0]._id, {
+      contents: 'bad update',
+    })
+    expect(post).toEqual(null)
+  })
 })
 
 describe('deleting posts', () => {
@@ -223,6 +258,18 @@ describe('deleting posts', () => {
       '000000000000000000000000',
       createdSamplePosts[0]._id,
     )
+    expect(result.deletedCount).toEqual(0)
+  })
+
+  test('should fail for invalid id format', async () => {
+    await expect(deletePost(testUser._id, 'invalid-id')).rejects.toThrow(
+      /Cast to ObjectId|Cast to ObjectId failed/,
+    )
+  })
+
+  test('should not allow another user to delete the post', async () => {
+    const otherUser = await createUser({ username: 'otherdel', password: 'pw' })
+    const result = await deletePost(otherUser._id, createdSamplePosts[1]._id)
     expect(result.deletedCount).toEqual(0)
   })
 })

@@ -7,6 +7,7 @@ import {
   deleteUser,
   getUserInfoById,
   listAllUsers,
+  loginUser,
   updateUser,
 } from '../services/users'
 
@@ -34,44 +35,61 @@ describe('creating users', () => {
 
     const foundUser = await User.findById(createdUser._id)
     expect(foundUser).toEqual(expect.objectContaining(userWithHashedPwd))
+    expect(foundUser.password).not.toBe(user.password)
+    expect(await bcrypt.compare(user.password, foundUser.password)).toBe(true)
     expect(foundUser.createdAt).toBeInstanceOf(Date)
     expect(foundUser.updatedAt).toBeInstanceOf(Date)
   })
 
   test('without username should fail', async () => {
-    const user = { password: 'testpwd12345' }
-    try {
-      await createUser(user)
-    } catch (err) {
-      expect(err).toBeInstanceOf(mongoose.Error.ValidationError)
-      expect(err.message).toContain('`username` is required')
-    }
+    await expect(
+      createUser({ password: 'testpwd12345' }),
+    ).rejects.toBeInstanceOf(mongoose.Error.ValidationError)
   })
 
   test('with duplicate username should fail', async () => {
-    const user1 = { username: 'tester', password: 'testpwd12345' }
-    const user2 = { username: 'tester', password: 'testpwd12345' }
-    try {
-      await createUser(user1)
-      await createUser(user2)
-    } catch (err) {
-      expect(err.message).toContain('duplicate key error collection')
-    }
+    const user = { username: 'tester', password: 'testpwd12345' }
+    await createUser(user)
+    await expect(createUser(user)).rejects.toThrow(
+      /duplicate key error collection/,
+    )
   })
 
   test('without password should fail', async () => {
-    const user = { username: 'tester' }
-    try {
-      await createUser(user)
-    } catch (err) {
-      expect(err.message).toContain('data and salt arguments required')
-    }
+    await expect(createUser({ username: 'tester' })).rejects.toThrow(
+      /data and salt arguments required/,
+    )
+  })
+})
+
+describe('logging in users', () => {
+  test('with valid credentials should succeed', async () => {
+    const user = { username: 'tester', password: 'testpwd12345' }
+    await createUser(user)
+    const token = await loginUser(user)
+    expect(typeof token).toBe('string')
+    expect(token.length).toBeGreaterThan(0)
+  })
+
+  test('with invalid username should fail', async () => {
+    await expect(
+      loginUser({ username: 'missing', password: 'whatever' }),
+    ).rejects.toThrow('invalid username!')
+  })
+
+  test('with invalid password should fail', async () => {
+    const user = { username: 'tester', password: 'testpwd12345' }
+    await createUser(user)
+    await expect(
+      loginUser({ username: 'tester', password: 'wrongpwd' }),
+    ).rejects.toThrow('invalid password!')
   })
 })
 
 let createdSampleUsers = []
 
 beforeEach(async () => {
+  await User.init()
   await User.deleteMany({})
   createdSampleUsers = []
   for (const user of sampleUsers) {
@@ -117,9 +135,20 @@ describe("getting a user's info", () => {
     expect(user).toEqual({ username: createdSampleUsers[0].username })
   })
 
+  test('should not expose password', async () => {
+    const user = await getUserInfoById(createdSampleUsers[0]._id)
+    expect(user).not.toHaveProperty('password')
+  })
+
   test('should fail if id does not exist', async () => {
     const user = await getUserInfoById('000000000000000000000000')
     expect(user).toEqual(null)
+  })
+
+  test('should fail for invalid id format', async () => {
+    await expect(getUserInfoById('invalid-id')).rejects.toThrow(
+      /user not found:/,
+    )
   })
 })
 
@@ -160,18 +189,33 @@ describe('updating a user', () => {
     })
     expect(user).toEqual(null)
   })
+
+  test('should fail for invalid id format', async () => {
+    await expect(
+      updateUser('invalid-id', {
+        username: 'testuser',
+        password: 'testpswd12345',
+      }),
+    ).rejects.toThrow(/Cast to ObjectId|Cast to ObjectId failed/)
+  })
 })
 
 describe('deleting a user', () => {
   test('should remove the user from the database', async () => {
     const result = await deleteUser(createdSampleUsers[0]._id)
     expect(result.deletedCount).toEqual(1)
-    const deletedUser = await User.findById(createdSampleUsers._id)
+    const deletedUser = await User.findById(createdSampleUsers[0]._id)
     expect(deletedUser).toEqual(null)
   })
 
   test('should fail if the `id` does not exist', async () => {
     const result = await deleteUser('000000000000000000000000')
     expect(result.deletedCount).toEqual(0)
+  })
+
+  test('should fail for invalid id format', async () => {
+    await expect(deleteUser('invalid-id')).rejects.toThrow(
+      /Cast to ObjectId|Cast to ObjectId failed/,
+    )
   })
 })
