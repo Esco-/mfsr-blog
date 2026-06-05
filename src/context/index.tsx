@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { type PostPayload } from '../components/Post'
-import { PostContext } from '../hooks'
+import { type Post, type PostPayload } from '../components/Post'
+import { PostContext, useAuth } from '../hooks'
 import {
   createPost,
   deletePost,
@@ -24,7 +24,7 @@ export const PostProvider = ({ children }: PostProviderProps) => {
   const [editId, setEditId] = useState<number | null>(null)
   const [title, setTitle] = useState('')
   const [contents, setContents] = useState('')
-
+  const { token } = useAuth()
   const queryClient = useQueryClient()
 
   const postsQuery = useQuery({
@@ -38,18 +38,18 @@ export const PostProvider = ({ children }: PostProviderProps) => {
     enabled: !!editId,
   })
 
-  const createPostMutation = useMutation({
-    mutationFn: (post: PostPayload) => createPost(post),
+  const createPostMutation = useMutation<Post, Error, PostPayload>({
+    mutationFn: (post: PostPayload) => createPost(token, post),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['posts'] }),
   })
 
-  const patchPostMutation = useMutation({
-    mutationFn: (post: PostPayload) => patchPost(post),
+  const patchPostMutation = useMutation<Post, Error, Post>({
+    mutationFn: (post: Post) => patchPost(token, post),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['posts'] }),
   })
 
-  const deletePostMutation = useMutation({
-    mutationFn: (id: number) => deletePost(id),
+  const deletePostMutation = useMutation<void, Error, number>({
+    mutationFn: (id: number) => deletePost(token, id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['posts'] }),
   })
 

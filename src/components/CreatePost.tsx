@@ -86,14 +86,6 @@ export function CreatePost() {
             setTitle(e.target.value)
           }
         />
-        <TextInputWidget
-          name='create-author'
-          label='Post author'
-          value={author}
-          onTextInputWidgetChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setAuthor(e.target.value)
-          }
-        />
         <TextAreaWidget
           name='post'
           label='Post text'

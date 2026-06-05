@@ -14,7 +14,11 @@ export const Signup = () => {
   const navigate = useNavigate()
   const signupMutation = useMutation({
     mutationFn: () => signup({ username, password }),
-    onSuccess: () => navigate('/login'),
+    onSuccess: () => {
+      setUsername('')
+      setPassword('')
+      navigate('/login')
+    },
     onError: () => alert('failed to sign up!'),
   })
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {

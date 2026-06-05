@@ -1,6 +1,7 @@
 import { jwtDecode } from 'jwt-decode'
 import { useAuth } from '../hooks'
 import { Link } from 'react-router-dom'
+import { User } from './User'
 import './Navbar.css'
 
 type DecodedToken = {
@@ -8,7 +9,7 @@ type DecodedToken = {
 }
 
 export const Navbar = () => {
-  const [token, setToken] = useAuth()
+  const { token, logout } = useAuth()
   let sub: string | null = null
   if (token) {
     const decoded = jwtDecode<DecodedToken>(token)
@@ -23,12 +24,12 @@ export const Navbar = () => {
         {sub ? (
           <>
             <li>
-              <Link to='/' onClick={() => setToken(null)}>
+              <Link to='/' onClick={logout}>
                 Logout
               </Link>
             </li>
             <li>
-              Logged in as <strong>{sub}</strong>
+              Logged in as <User id={sub} />
             </li>
           </>
         ) : (

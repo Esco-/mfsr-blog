@@ -1,8 +1,8 @@
 import { jwtDecode } from 'jwt-decode'
 import { TagList } from './TagList'
-import { useAuth } from '../hooks'
-import { usePosts } from '../hooks'
+import { usePosts, useAuth } from '../hooks'
 import { Icon } from './Icon'
+import { User } from './User'
 import './Post.css'
 
 type DecodedToken = {
@@ -36,7 +36,7 @@ export function Post({
   createdAt,
 }: PostProps) {
   const { deletePost, setEditId } = usePosts()
-  const [token] = useAuth()
+  const { token } = useAuth()
   let sub: string | null = null
   if (token) {
     const decoded = jwtDecode<DecodedToken>(token)
@@ -69,7 +69,7 @@ export function Post({
       {author && (
         <div className='author'>
           <em>
-            Written by <strong>{author}</strong>
+            Written by <User id={author} />
           </em>
         </div>
       )}

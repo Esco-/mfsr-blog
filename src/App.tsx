@@ -5,7 +5,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Blog from './pages/Blog'
 import { Signup } from './pages/Signup'
 import { Login } from './pages/Login'
-import { AuthContextProvider } from './context/AuthContext'
 
 const queryClient = new QueryClient()
 
@@ -28,9 +27,7 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <PostProvider>
-        <AuthContextProvider>
-          <RouterProvider router={router} />
-        </AuthContextProvider>
+        <RouterProvider router={router} />
       </PostProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

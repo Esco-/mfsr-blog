@@ -2,8 +2,7 @@ import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks'
-import { login } from '../api/users.js'
-import type { LoginResponse } from '../api/users.js'
+import { type LoginResponse, login } from '../api/users'
 import { TextInputWidget } from '../components/TextInputWidget'
 import { InputButton } from '../components/InputButton'
 import { Header } from '../components/Header'
@@ -13,12 +12,14 @@ import './Login.css'
 export const Login = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [, setToken] = useAuth()
+  const { setToken } = useAuth()
   const navigate = useNavigate()
   const loginMutation = useMutation<LoginResponse, Error, void>({
     mutationFn: () => login({ username, password }),
     onSuccess: (data) => {
       setToken(data.token)
+      setUsername('')
+      setPassword('')
       navigate('/')
     },
     onError: () => {

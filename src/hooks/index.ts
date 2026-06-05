@@ -95,6 +95,7 @@ type PostContextType = {
 type AuthContextType = {
   token: string | null
   setToken: Dispatch<SetStateAction<string | null>>
+  logout: () => void
 }
 
 export const PostContext = createContext<PostContextType | undefined>(undefined)
@@ -107,15 +108,12 @@ export const usePosts = () => {
   return context
 }
 
-export const AuthContext = createContext<AuthContextType>({
-  token: null,
-  setToken: () => {},
-})
+export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-export function useAuth(): [
-  string | null,
-  Dispatch<SetStateAction<string | null>>,
-] {
-  const { token, setToken } = useContext(AuthContext)
-  return [token, setToken]
+export function useAuth(): AuthContextType {
+  const context = useContext(AuthContext)
+  if (!context) {
+    throw new Error('useAuth must be used within a AuthContextProvider')
+  }
+  return context
 }

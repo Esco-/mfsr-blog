@@ -19,27 +19,49 @@ export const getPosts = async (
   return await parseJson(res)
 }
 
-export const createPost = async (post: PostPayload): Promise<Post> => {
+export const createPost = async (
+  token: string | null,
+  post: PostPayload,
+): Promise<Post> => {
+  if (!token) throw new Error('Missing auth token')
+
   const res = await fetch(`${BASE_URL}/posts`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify(post),
   })
   return await parseJson(res)
 }
 
-export const patchPost = async (post: Partial<Post>): Promise<Post> => {
+export const patchPost = async (
+  token: string | null,
+  post: Partial<Post>,
+): Promise<Post> => {
+  if (!token) throw new Error('Missing auth token')
+
   const res = await fetch(`${BASE_URL}/posts/${post._id}`, {
     method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify(post),
   })
   return await parseJson(res)
 }
 
-export const deletePost = async (id: number): Promise<void> => {
+export const deletePost = async (
+  token: string | null,
+  id: number,
+): Promise<void> => {
+  if (!token) throw new Error('Missing auth token')
+
   const res = await fetch(`${BASE_URL}/posts/${id}`, {
     method: 'DELETE',
+    headers: { Authorization: `Bearer ${token}` },
   })
   if (!res.ok) throw new Error(`Delete failed: ${res.status}`)
 }

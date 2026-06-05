@@ -6,6 +6,7 @@ import { PostList } from '../components/PostList'
 import { CreatePost } from '../components/CreatePost'
 import { Icon } from '../components/Icon'
 import { Header } from '../components/Header'
+import { Link } from 'react-router-dom'
 import './Blog.css'
 
 type DecodedToken = {
@@ -13,7 +14,7 @@ type DecodedToken = {
 }
 
 function Blog() {
-  const [token] = useAuth()
+  const { token } = useAuth()
   let sub: string | null = null
   if (token) {
     const decoded = jwtDecode<DecodedToken>(token)
@@ -30,7 +31,15 @@ function Blog() {
             <CreatePost />
           </section>
         </>
-      ) : null}
+      ) : (
+        <>
+          <div className='ticks'></div>
+          <div className='notice'>
+            Please <Link to='/login'>log in</Link> or{' '}
+            <Link to='/signup'>sign up</Link> to create new posts.
+          </div>
+        </>
+      )}
 
       <div className='ticks'></div>
 

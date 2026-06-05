@@ -15,6 +15,10 @@ export type LoginResponse = {
   token: string
 }
 
+type UserInfoResponse = {
+  username: string
+}
+
 const BASE_URL = import.meta.env.VITE_BACKEND_URL as string
 if (!BASE_URL) throw new Error('Missing VITE_BACKEND_URL')
 
@@ -49,4 +53,12 @@ export const login = async ({
     body: JSON.stringify({ username, password }),
   })
   return await parseJson<LoginResponse>(res)
+}
+
+export const getUserInfo = async (id: string) => {
+  const res = await fetch(`${BASE_URL}/users/${id}`, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  })
+  return await parseJson<UserInfoResponse>(res)
 }
